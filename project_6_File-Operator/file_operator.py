@@ -29,9 +29,7 @@ class JournalManager:
                 print("\nJournal entry cannot be empty!")
                 return
 
-            time = datetime.datetime.now().strftime(
-                "%Y-%m-%d %H:%M:%S"
-            )
+            time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             file = open(self.__filename, "a")
 
@@ -80,9 +78,7 @@ class JournalManager:
 
     def search_entry(self):
         try:
-            keyword = input(
-                "\nEnter a keyword or date to search: "
-            ).strip()
+            keyword = input("\nEnter a keyword or date to search: ").strip()
 
             if keyword == "":
                 raise ValueError("Search keyword cannot be empty.")
@@ -113,9 +109,7 @@ class JournalManager:
                     found = True
 
             if not found:
-                print(
-                    f"\nNo entries were found for: {keyword}."
-                )
+                print(f"\nNo entries were found for: {keyword}.")
 
         except FileNotFoundError:
             print("\nJournal file does not exist.")
@@ -134,9 +128,7 @@ class JournalManager:
             file = open(self.__filename, "r")
             file.close()
 
-            confirm = input(
-                "\nAre you sure you want to delete all entries? (yes/no): "
-            ).strip().lower()
+            confirm = input("\nAre you sure you want to delete all entries? (yes/no):).strip().lower()
 
             if confirm == "yes":
                 file = open(self.__filename, "w")
@@ -192,15 +184,11 @@ class JournalManager:
                     self.delete_entries()
 
                 elif choice == 5:
-                    print(
-                        "\nThank you for using Personal Data Manager!"
-                    )
+                    print("\nThank you for using Personal Data Manager!")
                     break
 
                 else:
-                    raise ValueError(
-                        "Please select a valid option from 1 to 5."
-                    )
+                    raise ValueError("Please select a valid option from 1 to 5.")
 
             except ValueError as e:
                 print("\nInvalid input:", e)
