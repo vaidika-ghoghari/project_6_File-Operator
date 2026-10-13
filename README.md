@@ -160,7 +160,7 @@ The `split()` method separates stored entries for searching.
 
 * **Topics Covered:** Project introduction, class and object, constructor, encapsulation, file modes, adding and viewing entries, searching, deleting, exception handling, and program execution.
 
-* **Video Link:** \(Add your explanation video URL here\)
+* **Video Link:** [Watch Project Explanation](https://drive.google.com/file/d/1Nx-D6Zs60MA53vqXK_7faDkAQudvNts5/view?usp=sharing)
 
 ## Connect With Me
 
