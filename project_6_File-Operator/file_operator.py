@@ -1,43 +1,29 @@
-
-print("Welcome to the Personal Data Manager!")
-
 import datetime
 
-
+print("Welcome to the Personal Data Manager!")
 class JournalManager:
 
     def __init__(self):
         self.__filename = "journal.txt"
 
-        file = None
-
         try:
             file = open(self.__filename, "r")
             file.close()
-            file = None
 
         except FileNotFoundError:
             try:
                 file = open(self.__filename, "x")
+                file.close()
+
             except OSError as e:
                 print("File error:", e)
-            finally:
-                if file is not None:
-                    file.close()
 
         except OSError as e:
             print("File error:", e)
 
-        finally:
-            if file is not None:
-                file.close()
-
     def add_entry(self):
-        file = None
-
         try:
             entry = input("\nEnter your journal entry:\n")
-
 
             if not entry.strip():
                 print("\nJournal entry cannot be empty!")
@@ -48,11 +34,16 @@ class JournalManager:
             )
 
             file = open(self.__filename, "a")
-            file.write(f"[{time}]\n")
-            file.write("-" * 35 + "\n")
-            file.write(entry + "\n\n")
 
-            print("\nYour entry has been successfully added!")
+            try:
+                file.write(f"[{time}]\n")
+                file.write("-" * 35 + "\n")
+                file.write(entry + "\n\n")
+
+                print("\nYour entry has been successfully added!")
+
+            finally:
+                file.close()
 
         except PermissionError:
             print("\nPermission denied! You cannot write to this file.")
@@ -60,23 +51,23 @@ class JournalManager:
         except OSError as e:
             print("\nFile error:", e)
 
-        finally:
-            if file is not None:
-                file.close()
-
     def view_entry(self):
-        file = None
-
         try:
             file = open(self.__filename, "r")
-            entries = file.read()
 
-            if not entries.strip():
-                print("\nYour journal is empty.")
-            else:
-                print("\nYour Journal Entries:")
-                print("=" * 30)
-                print(entries)
+            try:
+                entries = file.read()
+
+                if not entries.strip():
+                    print("\nYour journal is empty.")
+
+                else:
+                    print("\nYour Journal Entries:")
+                    print("=" * 30)
+                    print(entries)
+
+            finally:
+                file.close()
 
         except FileNotFoundError:
             print("\nNo journal file found. Add a new entry first.")
@@ -87,13 +78,7 @@ class JournalManager:
         except OSError as e:
             print("\nFile error:", e)
 
-        finally:
-            if file is not None:
-                file.close()
-
     def search_entry(self):
-        file = None
-
         try:
             keyword = input(
                 "\nEnter a keyword or date to search: "
@@ -103,9 +88,12 @@ class JournalManager:
                 raise ValueError("Search keyword cannot be empty.")
 
             file = open(self.__filename, "r")
-            entries = file.read()
-            file.close()
-            file = None
+
+            try:
+                entries = file.read()
+
+            finally:
+                file.close()
 
             if not entries.strip():
                 print("\nYour journal is empty.")
@@ -116,6 +104,7 @@ class JournalManager:
 
             for entry in all_entries:
                 if keyword.lower() in entry.lower():
+
                     if not found:
                         print("\nMatching Entries:")
                         print("-" * 35)
@@ -140,17 +129,10 @@ class JournalManager:
         except OSError as e:
             print("\nFile error:", e)
 
-        finally:
-            if file is not None:
-                file.close()
-
     def delete_entries(self):
-        file = None
-
         try:
             file = open(self.__filename, "r")
             file.close()
-            file = None
 
             confirm = input(
                 "\nAre you sure you want to delete all entries? (yes/no): "
@@ -158,9 +140,12 @@ class JournalManager:
 
             if confirm == "yes":
                 file = open(self.__filename, "w")
-                file.write("")
-                file.close()
-                file = None
+
+                try:
+                    file.write("")
+
+                finally:
+                    file.close()
 
                 print("\nAll journal entries have been deleted.")
 
@@ -168,9 +153,7 @@ class JournalManager:
                 print("\nDeletion cancelled.")
 
             else:
-                raise ValueError(
-                    "Please enter yes or no."
-                )
+                raise ValueError("Please enter yes or no.")
 
         except FileNotFoundError:
             print("\nJournal file does not exist.")
@@ -183,10 +166,6 @@ class JournalManager:
 
         except OSError as e:
             print("\nFile error:", e)
-
-        finally:
-            if file is not None:
-                file.close()
 
     def menu(self):
         while True:
@@ -229,3 +208,4 @@ class JournalManager:
 
 my_journal = JournalManager()
 my_journal.menu()
+
