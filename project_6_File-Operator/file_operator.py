@@ -128,7 +128,7 @@ class JournalManager:
             file = open(self.__filename, "r")
             file.close()
 
-            confirm = input("\nAre you sure you want to delete all entries? (yes/no):).strip().lower()
+            confirm = input("\nAre you sure you want to delete all entries? (yes/no):").strip().lower()
 
             if confirm == "yes":
                 file = open(self.__filename, "w")
